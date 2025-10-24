@@ -1,0 +1,1574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creditec Network & Cloud Infrastructure Training</title>
+    <style>
+        /* Dark Theme Presentation Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            height: 100vh;
+            overflow: hidden;
+            line-height: 1.6;
+        }
+        
+        .presentation {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.5s ease;
+            transform: translateX(100%);
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            opacity: 0;
+            z-index: 1;
+        }
+        
+        .slide.active {
+            transform: translateX(0);
+            opacity: 1;
+            z-index: 10;
+        }
+        
+        .slide.prev {
+            transform: translateX(-100%);
+        }
+        
+        /* Header styling */
+        .slide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #555;
+            padding-bottom: 1rem;
+        }
+        
+        .slide-title {
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: #4fc3f7;
+            text-shadow: 0 0 10px rgba(79, 195, 247, 0.3);
+        }
+        
+        .slide-number {
+            font-size: 1.2rem;
+            color: #90a4ae;
+            background: #2d2d2d;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+        }
+        
+        /* Content styling */
+        .slide-content {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 1rem;
+        }
+        
+        .slide-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .slide-content::-webkit-scrollbar-track {
+            background: #1e1e1e;
+        }
+        
+        .slide-content::-webkit-scrollbar-thumb {
+            background: #4fc3f7;
+            border-radius: 4px;
+        }
+        
+        h2 {
+            color: #4fc3f7;
+            margin: 1.5rem 0 1rem;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        h2:before {
+            content: "";
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #4fc3f7;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        h3 {
+            color: #64b5f6;
+            margin: 1.2rem 0 0.8rem;
+            font-size: 1.4rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+        
+        .highlight {
+            background: rgba(79, 195, 247, 0.15);
+            border-left: 3px solid #4fc3f7;
+            padding: 1rem;
+            border-radius: 0 4px 4px 0;
+            margin: 1.2rem 0;
+        }
+        
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .concept-card {
+            background: rgba(30, 30, 40, 0.7);
+            border-radius: 8px;
+            padding: 1.2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .concept-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(79, 195, 247, 0.2);
+        }
+        
+        .concept-card h4 {
+            color: #4fc3f7;
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+        
+        .diagram {
+            background: #1e1e1e;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border: 1px solid #333;
+        }
+        
+        .layer-model {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin: 1.5rem 0;
+        }
+        
+        .layer {
+            background: #2d2d2d;
+            padding: 0.8rem 1rem;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .layer-number {
+            background: #4fc3f7;
+            color: #000;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-weight: bold;
+        }
+        
+        .key-points {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(45%, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .point-card {
+            background: rgba(30, 30, 40, 0.7);
+            border-radius: 8px;
+            padding: 1.2rem;
+        }
+        
+        .point-card h4 {
+            color: #64b5f6;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .point-card h4:before {
+            content: "•";
+            color: #4fc3f7;
+            font-weight: bold;
+            margin-right: 8px;
+            font-size: 1.4rem;
+        }
+        
+        /* Navigation elements */
+        .navigation {
+            position: absolute;
+            bottom: 2rem;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 3rem;
+        }
+        
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .nav-btn:hover {
+            background: rgba(79, 195, 247, 0.3);
+            transform: scale(1.1);
+        }
+        
+        .instructions {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: #90a4ae;
+        }
+        
+        /* Progress indicator */
+        .progress-container {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 6px;
+            background: #333;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: #4fc3f7;
+            transition: width 0.3s ease;
+        }
+        
+        /* Specific slide styling */
+        .title-slide {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .title-slide h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            color: #4fc3f7;
+            text-shadow: 0 0 15px rgba(79, 195, 247, 0.4);
+        }
+        
+        .title-slide p {
+            font-size: 1.8rem;
+            max-width: 800px;
+            margin-bottom: 2rem;
+        }
+        
+        .company-logo {
+            font-size: 1.5rem;
+            background: rgba(79, 195, 247, 0.1);
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            margin-top: 2rem;
+            color: #4fc3f7;
+        }
+        
+        .key-takeaways {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .takeaway-card {
+            background: rgba(30, 30, 40, 0.7);
+            border-radius: 8px;
+            padding: 1.2rem;
+            border-top: 3px solid #4fc3f7;
+        }
+        
+        .takeaway-card h3 {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.8rem;
+        }
+        
+        .takeaway-card h3:before {
+            content: "✓";
+            color: #4fc3f7;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 1.4rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+        <!-- Slide 1: Title Slide -->
+        <div class="slide active title-slide">
+            <h1>Network and Cloud Infrastructure Training</h1>
+            <p>Essential Knowledge for Creditec's Self-Hosted Loan Management Systems</p>
+            <p style="font-size: 1.4rem; color: #90a4ae;">Understanding the Networking Foundations That Power Our Clients' Financial Operations</p>
+            <div class="company-logo">Creditec | Secure Loan Management Systems</div>
+            <div class="slide-number">Slide 1 of 15</div>
+        </div>
+        
+        <!-- Slide 2: Introduction -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">Part 1: Introduction</div>
+                <div class="slide-number">Slide 2 of 15</div>
+            </div>
+            <div class="slide-content">
+                <h2>Why Networking Knowledge Matters to Creditec</h2>
+                <p>As a company that develops loan management systems for self-hosted deployment on client servers with client data, networking fundamentals are essential to our business model.</p>
+                
+                <div class="highlight">
+                    <p><strong>Our unique position:</strong> We don't host the software or data - our clients do. This creates specific networking responsibilities that directly impact software performance, security, and integration capabilities.</p>
+                </div>
+                
+                <h2>Training Objectives</h2>
+                <div class="key-points">
+                    <div class="point-card">
+                        <h4>Understand networking fundamentals</h4>
+                        <p>Grasp core concepts that underpin how our software interacts with client infrastructure</p>
+                    </div>
+                    <div class="point-card">
+                        <h4>Cloud computing models relevance</h4>
+                        <p>Learn how cloud models relate to our self-hosted deployment strategy</p>
+                    </div>
+                    <div class="point-card">
+                        <h4>Security considerations</h4>
+                        <p>Identify critical security requirements for financial network environments</p>
+                    </div>
+                    <div class="point-card">
+                        <h4>Practical implementation</h4>
+                        <p>Apply knowledge to real-world client deployment scenarios</p>
+                    </div>
+                </div>
+                
+                <h2>Why This Matters to You</h2>
+                <p>Whether you're in development, support, or administration, understanding networking helps you:</p>
+                <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
+                    <li style="margin-bottom: 0.5rem;">Diagnose and resolve client issues more effectively</li>
+                    <li style="margin-bottom: 0.5rem;">Design software with proper network integration in mind</li>
+                    <li style="margin-bottom: 0.5rem;">Communicate more effectively with client infrastructure teams</li>
+                    <li>Ensure compliance with financial industry networking standards</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Slide 3: Understanding Our Unique Networking Environment -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">Part 2: Unique Networking Environment</div>
+                <div class="slide-number">Slide 3 of 15</div>
+            </div>
+            <div class="slide-content">
+                <h2>Why Creditec's Self-Hosted Model Creates Specific Networking Requirements</h2>
+                
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>Integration Complexity</h4>
+                        <p>Our software must connect securely to various banking systems, credit bureaus, and document management solutions - all with different networking requirements.</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>Security Posture</h4>
+                        <p>Network configuration directly impacts the security of sensitive loan data processed through our systems.</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>Performance Demands</h4>
+                        <p>Financial transactions require low-latency connections; network performance directly affects client satisfaction.</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>Compliance Requirements</h4>
+                        <p>Network architecture must support regulatory compliance (GLBA, PCI DSS, GDPR) for financial data handling.</p>
+                    </div>
+                </div>
+                
+                <h2>The Critical Role of Networking in Financial Software</h2>
+                <p>When our loan management system processes a mortgage application:</p>
+                
+                <div class="diagram">
+                    <h3>Network Interactions in Loan Processing</h3>
+                    <ol style="padding-left: 1.5rem; margin-top: 0.5rem;">
+                        <li style="margin-bottom: 0.8rem;"><strong>Credit Checks:</strong> Secure connection to credit bureaus (Experian, Equifax, TransUnion)</li>
+                        <li style="margin-bottom: 0.8rem;"><strong>Account Verification:</strong> Communication with core banking systems</li>
+                        <li style="margin-bottom: 0.8rem;"><strong>Document Management:</strong> Integration with secure document storage systems</li>
+                        <li style="margin-bottom: 0.8rem;"><strong>Fund Transfers:</strong> Connections to payment processing networks</li>
+                        <li><strong>Compliance Reporting:</strong> Data transmission to regulatory monitoring systems</li>
+                    </ol>
+                </div>
+                
+                <div class="highlight">
+                    <p><strong>Key Insight:</strong> Any network disruption or misconfiguration can delay loan approvals, create compliance issues, or prevent customers from accessing critical financial services - directly impacting our clients' business operations and reputation.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 4: Core Networking Concepts - Models -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">Part 3: Core Networking Concepts (1/3)</div>
+                <div class="slide-number">Slide 4 of 15</div>
+            </div>
+            <div class="slide-content">
+                <h2>Network Communication Models</h2>
+                
+                <h3>OSI Model - The Theoretical Framework</h3>
+                <p>A 7-layer model describing how data travels between devices on a network:</p>
+                
+                <div class="layer-model">
+                    <div class="layer">
+                        <div class="layer-number">7</div>
+                        <div>Application Layer - User interface for network services (HTTP, FTP)</div>
+                    </div>
+                    <div class="layer">
+                        <div class="layer-number">6</div>
+                        <div>Presentation Layer - Data formatting and encryption</div>
+                    </div>
+                    <div class="layer">
+                        <div class="layer-number">5</div>
+                        <div>Session Layer - Manages communication sessions between applications</div>
+                    </div>
+                    <div class="layer">
+                        <div class="layer-number">4</div>
+                        <div>Transport Layer - Ensures reliable data delivery (TCP, UDP)</div>
+                    </div>
+                    <div class="layer">
+                        <div class="layer-number">3</div>
+                        <div>Network Layer - Addressing and routing (IP)</div>
+                    </div>
+                    <div class="layer">
+                        <div class="layer-number">2</div>
+                        <div>Data Link Layer - Device-to-device communication (Ethernet)</div>
+                    </div>
+                    <div class="layer">
+                        <div class="layer-number">1</div>
+                        <div>Physical Layer - Physical connection between devices</div>
+                    </div>
+                </div>
+                
+                <h3>TCP/IP Model - The Practical Implementation</h3>
+                <p>The 4-layer model that powers the internet and most modern networks:</p>
+                
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>Application Layer</h4>
+                        <p>Corresponds to OSI layers 5-7<br>
+                        (HTTP, HTTPS, FTP, SMTP)</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>Transport Layer</h4>
+                        <p>Corresponds to OSI layer 4<br>
+                        (TCP, UDP)</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>Internet Layer</h4>
+                        <p>Corresponds to OSI layer 3<br>
+                        (IP, ICMP)</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>Network Access Layer</h4>
+                        <p>Corresponds to OSI layers 1-2<br>
+                        (Ethernet, Wi-Fi)</p>
+                    </div>
+                </div>
+                
+                <div class="highlight">
+                    <p><strong>Why this matters for Creditec:</strong> When diagnosing network issues with client deployments, understanding which layer is affected helps isolate whether problems are with our software, the client's network configuration, or external factors.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 5: Core Networking Concepts - Protocols & Ports -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">Part 3: Core Networking Concepts (2/3)</div>
+                <div class="slide-number">Slide 5 of 15</div>
+            </div>
+            <div class="slide-content">
+                <h2>Protocols and Ports in Financial Systems</h2>
+                
+                <h3>Network Protocols: The Rules of Communication</h3>
+                <p>Standardized rules governing how devices communicate across networks:</p>
+                
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>Communication Protocols</h4>
+                        <p>Establish and maintain connections<br>
+                        • TCP (reliable, connection-oriented)<br>
+                        • UDP (fast, connectionless)<br>
+                        • HTTP/HTTPS (web traffic)</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>Security Protocols</h4>
+                        <p>Protect data in transit<br>
+                        • SSL/TLS (encryption)<br>
+                        • IPsec (secure network connections)<br>
+                        • SSH (secure remote access)</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>Management Protocols</h4>
+                        <p>Monitor and manage network performance<br>
+                        • SNMP (network monitoring)<br>
+                        • ICMP (diagnostics)<br>
+                        • DNS (name resolution)</p>
+                    </div>
+                </div>
+                
+                <h3>Critical Ports for Creditec Deployments</h3>
+                <div class="diagram">
+                    <table style="width: 100%; border-collapse: collapse; color: #e0e0e0;">
+                        <thead>
+                            <tr style="background: #2d2d2d;">
+                                <th style="padding: 0.8rem; text-align: left; border-bottom: 1px solid #444;">Port</th>
+                                <th style="padding: 0.8rem; text-align: left; border-bottom: 1px solid #444;">Protocol</th>
+                                <th style="padding: 0.8rem; text-align: left; border-bottom: 1px solid #444;">Purpose</th>
+                                <th style="padding: 0.8rem; text-align: left; border-bottom: 1px solid #444;">Creditec Relevance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid #333;">
+                                <td style="padding: 0.8rem;">53</td>
+                                <td>UDP/TCP</td>
+                                <td>DNS</td>
+                                <td>Domain name resolution for all client integrations</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #333;">
+                                <td style="padding: 0.8rem;">80</td>
+                                <td>TCP</td>
+                                <td>HTTP</td>
+                                <td>Web interface access (should be redirected to HTTPS)</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #333;">
+                                <td style="padding: 0.8rem;">443</td>
+                                <td>TCP</td>
+                                <td>HTTPS</td>
+                                <td>Secure web interface for loan management (critical)</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #333;">
+                                <td style="padding: 0.8rem;">22</td>
+                                <td>TCP</td>
+                                <td>SSH</td>
+                                <td>Secure remote administration of client servers</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #333;">
+                                <td style="padding: 0.8rem;">3306</td>
+                                <td>TCP</td>
+                                <td>MySQL</td>
+                                <td>Database connections for loan data storage</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.8rem;">1433</td>
+                                <td>TCP</td>
+                                <td>MS SQL</td>
+                                <td>Alternative database connections for enterprise clients</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="highlight">
+                    <p><strong>Port Range Classification:</strong></p>
+                    <p><strong>Well-known ports (0-1,023):</strong> Assigned to common services (HTTP, HTTPS, SSH)</p>
+                    <p><strong>Registered ports (1,024-49,151):</strong> Assigned to specific applications</p>
+                    <p><strong>Dynamic/private ports (49,152-65,535):</strong> Used by client applications temporarily</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 6: Core Networking Concepts - Network Types -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">Part 3: Core Networking Concepts (3/3)</div>
+                <div class="slide-number">Slide 6 of 15</div>
+            </div>
+            <div class="slide-content">
+                <h2>Network Types and Topologies in Financial Environments</h2>
+                
+                <h3>Network Types in Client Deployments</h3>
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>LAN (Local Area Network)</h4>
+                        <p><strong>Scope:</strong> Single location (bank branch)<br>
+                        <strong>Use Case:</strong> Internal loan processing within a branch<br>
+                        <strong>Creditec Impact:</strong> Our software typically runs on client's LAN</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>WAN (Wide Area Network)</h4>
+                        <p><strong>Scope:</strong> Multiple locations (across cities/countries)<br>
+                        <strong>Use Case:</strong> Connecting branch offices to central systems<br>
+                        <strong>Creditec Impact:</strong> Affects performance of distributed deployments</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>SAN (Storage Area Network)</h4>
+                        <p><strong>Scope:</strong> High-performance storage network<br>
+                        <strong>Use Case:</strong> Storing large volumes of loan data<br>
+                        <strong>Creditec Impact:</strong> Database performance for enterprise clients</p>
+                    </div>
+                </div>
+                
+                <h3>Network Topologies in Financial Institutions</h3>
+                <div class="diagram">
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;">
+                        <div style="background: #1e1e1e; border-radius: 8px; padding: 1rem;">
+                            <h4 style="color: #4fc3f7; margin-bottom: 0.8rem;">Star Topology</h4>
+                            <p style="margin-bottom: 0.8rem;"><strong>Structure:</strong> All devices connect to central switch</p>
+                            <p style="margin-bottom: 0.8rem;"><strong>Pros:</strong> Easy troubleshooting, device failure doesn't crash network</p>
+                            <p><strong>Creditec Relevance:</strong> Most common in modern financial deployments</p>
+                        </div>
+                        <div style="background: #1e1e1e; border-radius: 8px; padding: 1rem;">
+                            <h4 style="color: #4fc3f7; margin-bottom: 0.8rem;">Bus Topology</h4>
+                            <p style="margin-bottom: 0.8rem;"><strong>Structure:</strong> Single backbone cable with devices connected</p>
+                            <p style="margin-bottom: 0.8rem;"><strong>Cons:</strong> Cable failure affects entire network, collisions possible</p>
+                            <p><strong>Creditec Relevance:</strong> Rare in modern financial systems, but may exist in legacy environments</p>
+                        </div>
+                        <div style="background: #1e1e1e; border-radius: 8px; padding: 1rem;">
+                            <h4 style="color: #4fc3f7; margin-bottom: 0.8rem;">Mesh Topology</h4>
+                            <p style="margin-bottom: 0.8rem;"><strong>Structure:</strong> Multiple redundant connections between devices</p>
+                            <p style="margin-bottom: 0.8rem;"><strong>Pros:</strong> High reliability, multiple path options</p>
+                            <p><strong>Creditec Relevance:</strong> Used in critical financial infrastructure for maximum uptime</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>IP Addressing Fundamentals</h3>
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>IPv4 Structure</h4>
+                        <p>Four octets (0-255)<br>
+                        Example: 192.168.0.1<br>
+                        • First part: Network ID<br>
+                        • Last part: Host ID</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>Subnet Masks</h4>
+                        <p>Determines network vs. host portion<br>
+                        Common masks:<br>
+                        • Class A: 255.0.0.0<br>
+                        • Class B: 255.255.0.0<br>
+                        • Class C: 255.255.255.0</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>Address Assignment</h4>
+                        <p><strong>Static:</strong> Manual configuration (servers, printers)<br>
+                        <strong>Dynamic:</strong> DHCP server assigns addresses (workstations)<br>
+                        <strong>Creditec Note:</strong> Our software documentation must specify required addressing approaches</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 7: Cloud Computing Models -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">Part 4: Cloud Computing Models</div>
+                <div class="slide-number">Slide 7 of 15</div>
+            </div>
+            <div class="slide-content">
+                <h2>Cloud Computing Models and Creditec's Context</h2>
+                
+                <div class="highlight">
+                    <p><strong>Important Distinction:</strong> While Creditec's core business model is self-hosted software, understanding cloud models is increasingly important as our clients evaluate their infrastructure options and adopt hybrid approaches.</p>
+                </div>
+                
+                <h3>Cloud Deployment Models</h3>
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>Public Cloud</h4>
+                        <p><strong>Definition:</strong> Infrastructure owned and operated by third-party providers<br>
+                        <strong>Examples:</strong> AWS, Azure, Google Cloud<br>
+                        <strong>Creditec Relevance:</strong> Some clients may deploy our software in public cloud environments, requiring specific configuration guidance</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>Private Cloud (On-Premise)</h4>
+                        <p><strong>Definition:</strong> Infrastructure dedicated to a single organization<br>
+                        <strong>Hosting:</strong> Client's own data center<br>
+                        <strong>Creditec Relevance:</strong> Our primary deployment model - clients host our software on their infrastructure</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>Hybrid Cloud</h4>
+                        <p><strong>Definition:</strong> Combines public and private cloud elements<br>
+                        <strong>Function:</strong> Allows data/application movement between environments<br>
+                        <strong>Creditec Relevance:</strong> Increasingly common as clients adopt cloud services while keeping core financial processing on-premise</p>
+                    </div>
+                </div>
+                
+                <h3>On-Premise vs. Cloud for Financial Institutions</h3>
+                <div class="diagram">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                        <div>
+                            <h4 style="color: #4fc3f7; margin-bottom: 1rem;">On-Premise Advantages</h4>
+                            <ul style="padding-left: 1.2rem;">
+                                <li style="margin-bottom: 0.7rem;">Complete control over infrastructure and security</li>
+                                <li style="margin-bottom: 0.7rem;">Direct compliance with financial regulations</li>
+                                <li style="margin-bottom: 0.7rem;">No internet dependency for internal operations</li>
+                                <li style="margin-bottom: 0.7rem;">Better performance for high-volume transaction processing</li>
+                                <li>Enhanced data sovereignty and privacy</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 style="color: #4fc3f7; margin-bottom: 1rem;">Cloud Advantages</h4>
+                            <ul style="padding-left: 1.2rem;">
+                                <li style="margin-bottom: 0.7rem;">Reduced capital expenditure for infrastructure</li>
+                                <li style="margin-bottom: 0.7rem;">Easier scaling during peak processing periods</li>
+                                <li style="margin-bottom: 0.7rem;">Built-in redundancy and disaster recovery options</li>
+                                <li style="margin-bottom: 0.7rem;">Simplified maintenance and updates</li>
+                                <li>Access to advanced security features and expertise</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Direct Cloud Connections</h3>
+                <p>For clients using cloud services alongside our self-hosted software:</p>
+                
+                <div class="concept-card" style="margin-top: 1rem;">
+                    <h4>Azure ExpressRoute / AWS Direct Connect</h4>
+                    <p><strong>Function:</strong> Dedicated pathways that bypass the public internet</p>
+                    <p><strong>Benefits for Financial Clients:</strong></p>
+                    <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
+                        <li style="margin-bottom: 0.5rem;">Enhanced security for data in transit</li>
+                        <li style="margin-bottom: 0.5rem;">More consistent network performance</li>
+                        <li style="margin-bottom: 0.5rem;">Higher reliability for critical operations</li>
+                        <li>Better compliance with financial industry standards</li>
+                    </ul>
+                    <p style="margin-top: 1rem;"><strong>Creditec Implementation Note:</strong> Our documentation must include guidance for clients using direct cloud connections for hybrid deployments.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 8: Network Security Considerations -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">Part 5: Network Security Considerations</div>
+                <div class="slide-number">Slide 8 of 15</div>
+            </div>
+            <div class="slide-content">
+                <h2>Securing Financial Network Communications</h2>
+                
+                <div class="highlight">
+                    <p><strong>Non-negotiable Reality:</strong> In the financial sector, network security isn't optional—it's a regulatory requirement. Our loan management systems handle sensitive PII and financial data that must be protected according to regulations like GLBA, PCI DSS, and regional data protection laws.</p>
+                </div>
+                
+                <h3>Critical Security Protocols for Creditec Deployments</h3>
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>TLS/SSL (Port 443)</h4>
+                        <p><strong>Purpose:</strong> Encrypt data between client servers, web interfaces, and third-party services<br>
+                        <strong>Creditec Requirement:</strong> Must be properly configured in all deployments<br>
+                        <strong>Best Practice:</strong> Minimum TLS 1.2, with regular certificate rotation</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>IPsec (Various Ports)</h4>
+                        <p><strong>Purpose:</strong> Secure site-to-site connections between bank branches<br>
+                        <strong>Creditec Requirement:</strong> Documentation for integration with client's IPsec configurations<br>
+                        <strong>Best Practice:</strong> Support for strong encryption algorithms (AES-256)</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>SSH (Port 22)</h4>
+                        <p><strong>Purpose:</strong> Secure remote administration of our software<br>
+                        <strong>Creditec Requirement:</strong> Secure default configurations, no password authentication by default<br>
+                        <strong>Best Practice:</strong> Key-based authentication, port customization options</p>
+                    </div>
+                </div>
+                
+                <h3>Network Segmentation for Financial Systems</h3>
+                <p>Financial institutions implement strict network segmentation to protect loan management systems:</p>
+                
+                <div class="diagram">
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8rem; margin-top: 1rem;">
+                        <div style="background: #2d2d2d; padding: 1rem; border-radius: 6px; text-align: center;">
+                            <div style="font-weight: bold; color: #ff7961; margin-bottom: 0.5rem;">DMZ</div>
+                            <div style="font-size: 0.9rem;">Public-facing components (limited functionality)</div>
+                        </div>
+                        <div style="background: #2d2d2d; padding: 1rem; border-radius: 6px; text-align: center;">
+                            <div style="font-weight: bold; color: #64b5f6; margin-bottom: 0.5rem;">Application Tier</div>
+                            <div style="font-size: 0.9rem;">Where loan management software runs</div>
+                        </div>
+                        <div style="background: #2d2d2d; padding: 1rem; border-radius: 6px; text-align: center;">
+                            <div style="font-weight: bold; color: #81c784; margin-bottom: 0.5rem;">Database Tier</div>
+                            <div style="font-size: 0.9rem;">Isolated for maximum protection of loan data</div>
+                        </div>
+                        <div style="background: #2d2d2d; padding: 1rem; border-radius: 6px; text-align: center;">
+                            <div style="font-weight: bold; color: #ba68c8; margin-bottom: 0.5rem;">Management Network</div>
+                            <div style="font-size: 0.9rem;">Separate network for administrative access</div>
+                        </div>
+                    </div>
+                    <p style="margin-top: 1rem; font-style: italic;">Firewalls should be configured with strict rules between each tier, allowing only necessary traffic.</p>
+                </div>
+                
+                <h3>Network Monitoring for Financial Systems</h3>
+                <div class="key-points">
+                    <div class="point-card">
+                        <h4>Monitoring Approaches</h4>
+                        <p><strong>Packet Capturing:</strong> Detailed analysis of network traffic (for specific troubleshooting)</p>
+                        <p><strong>Flow Analysis:</strong> Monitoring traffic patterns across the entire network (for ongoing performance)</p>
+                    </div>
+                    <div class="point-card">
+                        <h4>Key Metrics to Monitor</h4>
+                        <p>• Latency (critical for real-time loan processing)</p>
+                        <p>• Throughput (must handle peak transaction volumes)</p>
+                        <p>• Error Rates (indicate potential network issues)</p>
+                        <p>• Security Events (unauthorized access attempts)</p>
+                    </div>
+                </div>
+                
+                <div class="highlight">
+                    <p><strong>Creditec Implementation Guidance:</strong> Our software should include comprehensive logging capabilities that integrate with clients' existing network monitoring solutions, with clear documentation on which metrics are most important to track for our application.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 9: Practical Implementation - Configuration -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">Part 6: Practical Implementation (1/4)</div>
+                <div class="slide-number">Slide 9 of 15</div>
+            </div>
+            <div class="slide-content">
+                <h2>Secure Network Configuration for Creditec Software</h2>
+                
+                <h3>Configuration Security Best Practices</h3>
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>Secure Default Configurations</h4>
+                        <p>• Never ship software with default ports that are well-known security risks</p>
+                        <p>• Implement secure defaults that follow financial industry standards</p>
+                        <p>• Provide clear documentation on configuration rationale</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>Comprehensive Security Hardening</h4>
+                        <p>• Include step-by-step security hardening guides for client network teams</p>
+                        <p>• Document all required ports and protocols for proper firewall configuration</p>
+                        <p>• Provide templates for common client infrastructure configurations</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>Network Access Control</h4>
+                        <p>• Implement strict access controls based on principle of least privilege</p>
+                        <p>• Ensure integration with clients' existing authentication systems</p>
+                        <p>• Provide guidance on network segmentation for different software components</p>
+                    </div>
+                </div>
+                
+                <h3>Essential Documentation Components</h3>
+                <div class="diagram">
+                    <table style="width: 100%; border-collapse: collapse; color: #e0e0e0;">
+                        <thead>
+                            <tr style="background: #2d2d2d;">
+                                <th style="padding: 0.8rem; text-align: left; border-bottom: 1px solid #444; width: 25%;">Documentation Type</th>
+                                <th style="padding: 0.8rem; text-align: left; border-bottom: 1px solid #444; width: 25%;">Key Content</th>
+                                <th style="padding: 0.8rem; text-align: left; border-bottom: 1px solid #444; width: 25%;">Client Benefit</th>
+                                <th style="padding: 0.8rem; text-align: left; border-bottom: 1px solid #444; width: 25%;">Creditec Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid #333;">
+                                <td style="padding: 0.8rem;">Network Requirements Guide</td>
+                                <td>Required ports, protocols, bandwidth estimates</td>
+                                <td>Ensures proper network setup before installation</td>
+                                <td>Reduces deployment issues and support tickets</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #333;">
+                                <td style="padding: 0.8rem;">Security Hardening Guide</td>
+                                <td>Step-by-step configuration for security compliance</td>
+                                <td>Meets regulatory requirements and passes audits</td>
+                                <td>Positions Creditec as security-conscious vendor</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #333;">
+                                <td style="padding: 0.8rem;">Troubleshooting Guide</td>
+                                <td>Network diagnostics procedures and tools</td>
+                                <td>Reduces downtime during network issues</td>
+                                <td>Improves client satisfaction and retention</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.8rem;">Integration Guide</td>
+                                <td>Network configuration for third-party systems</td>
+                                <td>Smooth integration with existing infrastructure</td>
+                                <td>Differentiates Creditec from competitors</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <h3>Client Network Assessment Checklist</h3>
+                <div class="concept-card" style="margin-top: 1rem;">
+                    <p>Before deployment, ensure clients have addressed these network considerations:</p>
+                    <ul style="padding-left: 1.5rem; margin-top: 0.8rem;">
+                        <li style="margin-bottom: 0.6rem;">• Sufficient bandwidth for expected transaction volumes (including peak periods)</li>
+                        <li style="margin-bottom: 0.6rem;">• Proper network segmentation aligned with security requirements</li>
+                        <li style="margin-bottom: 0.6rem;">• Required ports open between application, database, and integration points</li>
+                        <li style="margin-bottom: 0.6rem;">• Appropriate hardware specifications for network devices (firewalls, switches)</li>
+                        <li style="margin-bottom: 0.6rem;">• DNS configuration that supports all required domain names and services</li>
+                        <li style="margin-bottom: 0.6rem;">• Redundant network paths for critical components</li>
+                        <li>Network monitoring in place to detect performance or security issues</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 10: Practical Implementation - Planning -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">Part 6: Practical Implementation (2/4)</div>
+                <div class="slide-number">Slide 10 of 15</div>
+            </div>
+            <div class="slide-content">
+                <h2>Infrastructure Planning for Client Deployments</h2>
+                
+                <h3>Understanding Client Network Requirements</h3>
+                <p>Successful Creditec deployments require thorough understanding of client network environments:</p>
+                
+                <div class="key-points">
+                    <div class="point-card">
+                        <h4>Existing Network Topology</h4>
+                        <p>• Map current network layout including segmentation</p>
+                        <p>• Identify potential bottlenecks or single points of failure</p>
+                        <p>• Document existing security controls (firewalls, IDS/IPS)</p>
+                    </div>
+                    <div class="point-card">
+                        <h4>Required Integrations</h4>
+                        <p>• List all third-party systems that need connectivity</p>
+                        <p>• Determine required protocols and ports for each integration</p>
+                        <p>• Identify any network restrictions that might impact integrations</p>
+                    </div>
+                </div>
+                
+                <div class="key-points" style="margin-top: 1.5rem;">
+                    <div class="point-card">
+                        <h4>Performance Requirements</h4>
+                        <p>• Estimate transaction volumes during peak processing</p>
+                        <p>• Determine acceptable latency thresholds for critical operations</p>
+                        <p>• Plan for future growth (3-5 year projection)</p>
+                    </div>
+                    <div class="point-card">
+                        <h4>Security & Compliance Constraints</h4>
+                        <p>• Document regulatory requirements affecting network design</p>
+                        <p>• Identify specific security controls required by client</p>
+                        <p>• Plan for audit trail requirements related to network activity</p>
+                    </div>
+                </div>
+                
+                <h3>Equipment Needs Assessment</h3>
+                <div class="diagram">
+                    <h4 style="color: #4fc3f7; margin-bottom: 1rem;">Network Hardware Recommendations by Deployment Size</h4>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+                        <div style="background: #1e1e1e; border-radius: 8px; padding: 1rem;">
+                            <h5 style="color: #64b5f6; margin-bottom: 0.8rem;">Small Deployment</h5>
+                            <p style="margin-bottom: 0.8rem;"><strong>Transaction Volume:</strong> < 1,000/day</p>
+                            <p style="margin-bottom: 0.8rem;"><strong>Network Hardware:</strong></p>
+                            <ul style="padding-left: 1.2rem;">
+                                <li style="margin-bottom: 0.5rem;">Business-grade switch (24-48 ports)</li>
+                                <li style="margin-bottom: 0.5rem;">Basic firewall with content filtering</li>
+                                <li>Standard network cabling (Cat 6)</li>
+                            </ul>
+                        </div>
+                        <div style="background: #1e1e1e; border-radius: 8px; padding: 1rem;">
+                            <h5 style="color: #64b5f6; margin-bottom: 0.8rem;">Medium Deployment</h5>
+                            <p style="margin-bottom: 0.8rem;"><strong>Transaction Volume:</strong> 1,000-10,000/day</p>
+                            <p style="margin-bottom: 0.8rem;"><strong>Network Hardware:</strong></p>
+                            <ul style="padding-left: 1.2rem;">
+                                <li style="margin-bottom: 0.5rem;">Managed switch with QoS capabilities</li>
+                                <li style="margin-bottom: 0.5rem;">Enterprise firewall with IPS/IDS</li>
+                                <li>Fiber connections between critical components</li>
+                            </ul>
+                        </div>
+                        <div style="background: #1e1e1e; border-radius: 8px; padding: 1rem;">
+                            <h5 style="color: #64b5f6; margin-bottom: 0.8rem;">Enterprise Deployment</h5>
+                            <p style="margin-bottom: 0.8rem;"><strong>Transaction Volume:</strong> > 10,000/day</p>
+                            <p style="margin-bottom: 0.8rem;"><strong>Network Hardware:</strong></p>
+                            <ul style="padding-left: 1.2rem;">
+                                <li style="margin-bottom: 0.5rem;">Redundant core switches with stacking</li>
+                                <li style="margin-bottom: 0.5rem;">High-availability firewall clusters</li>
+                                <li>Dedicated network paths for critical traffic</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="highlight" style="margin-top: 1.5rem;">
+                    <p><strong>Creditec Implementation Strategy:</strong> Develop standardized network assessment templates that our implementation teams can use with clients to ensure all network requirements are addressed before deployment begins. This reduces deployment failures and improves client satisfaction.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 11: Practical Implementation - Troubleshooting -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">Part 6: Practical Implementation (3/4)</div>
+                <div class="slide-number">Slide 11 of 15</div>
+            </div>
+            <div class="slide-content">
+                <h2>Network Troubleshooting Framework for Creditec Support</h2>
+                
+                <div class="highlight">
+                    <p><strong>Systematic Approach:</strong> When network issues arise with our software, use this structured methodology to isolate the root cause efficiently.</p>
+                </div>
+                
+                <h3>Troubleshooting Methodology</h3>
+                <div class="layer-model">
+                    <div class="layer">
+                        <div class="layer-number">1</div>
+                        <div><strong>Identify the Affected Layer</strong><br>Determine which OSI/TCP/IP layer is impacted (Physical, Data Link, Network, Transport, Application)</div>
+                    </div>
+                    <div class="layer">
+                        <div class="layer-number">2</div>
+                        <div><strong>Verify Basic Connectivity</strong><br>Can devices reach each other? (Use ping, traceroute, telnet to test connections)</div>
+                    </div>
+                    <div class="layer">
+                        <div class="layer-number">3</div>
+                        <div><strong>Check Protocol Compatibility</strong><br>Are systems using expected protocols and versions? (TLS version mismatches, etc.)</div>
+                    </div>
+                    <div class="layer">
+                        <div class="layer-number">4</div>
+                        <div><strong>Verify Port Accessibility</strong><br>Are required ports open and unblocked by firewalls? (Use port scanning tools)</div>
+                    </div>
+                    <div class="layer">
+                        <div class="layer-number">5</div>
+                        <div><strong>Analyze Performance Metrics</strong><br>Is there excessive latency, packet loss, or bandwidth constraints?</div>
+                    </div>
+                </div>
+                
+                <h3>Troubleshooting Tools for Creditec Teams</h3>
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>Basic Connectivity Tools</h4>
+                        <p><strong>Ping:</strong> Tests basic network reachability</p>
+                        <p><strong>Traceroute:</strong> Maps network path to destination</p>
+                        <p><strong>Telnet/Netcat:</strong> Tests specific port connectivity</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>Protocol Analysis</h4>
+                        <p><strong>Wireshark:</strong> Packet capture and analysis</p>
+                        <p><strong>SSL Labs Test:</strong> SSL/TLS configuration testing</p>
+                        <p><strong>Nmap:</strong> Network scanning and port discovery</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>Creditec-Specific Tools</h4>
+                        <p><strong>Network Diagnostics Module:</strong> Built-in tool in our software</p>
+                        <p><strong>Integration Test Suite:</strong> Verifies third-party connections</p>
+                        <p><strong>Performance Baseline Tool:</strong> Compares current vs. expected performance</p>
+                    </div>
+                </div>
+                
+                <h3>Support Documentation Framework</h3>
+                <div class="diagram">
+                    <h4 style="color: #4fc3f7; margin-bottom: 1rem;">Network Issue Documentation Template</h4>
+                    <table style="width: 100%; border-collapse: collapse; color: #e0e0e0;">
+                        <thead>
+                            <tr style="background: #2d2d2d;">
+                                <th style="padding: 0.8rem; text-align: left; border-bottom: 1px solid #444; width: 25%;">Section</th>
+                                <th style="padding: 0.8rem; text-align: left; border-bottom: 1px solid #444; width: 75%;">Required Information</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid #333;">
+                                <td style="padding: 0.8rem; vertical-align: top;">Issue Description</td>
+                                <td style="padding: 0.8rem;">Specific symptoms, error messages, when it occurs, affected functionality</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #333;">
+                                <td style="padding: 0.8rem; vertical-align: top;">Network Topology</td>
+                                <td style="padding: 0.8rem;">Diagram of client's network showing Creditec components and connections</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #333;">
+                                <td style="padding: 0.8rem; vertical-align: top;">Test Results</td>
+                                <td style="padding: 0.8rem;">Output from connectivity tests, port checks, and protocol verification</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #333;">
+                                <td style="padding: 0.8rem; vertical-align: top;">Client Configuration</td>
+                                <td style="padding: 0.8rem;">Relevant firewall rules, network settings, and security policies</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.8rem; vertical-align: top;">Resolution Steps</td>
+                                <td style="padding: 0.8rem;">Detailed steps taken to resolve, including configuration changes made</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="highlight">
+                    <p><strong>Key Insight:</strong> Consistent documentation of network issues creates a knowledge base that improves future troubleshooting and identifies patterns that may indicate software improvements needed.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 12: Practical Implementation - Hybrid Deployments -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">Part 6: Practical Implementation (4/4)</div>
+                <div class="slide-number">Slide 12 of 15</div>
+            </div>
+            <div class="slide-content">
+                <h2>Supporting Hybrid Deployment Scenarios</h2>
+                
+                <div class="highlight">
+                    <p><strong>Industry Trend:</strong> More financial clients are adopting hybrid infrastructure models, running some components on-premise (including our loan management system) while using cloud services for other functions. Creditec must adapt to support these evolving deployment patterns.</p>
+                </div>
+                
+                <h3>Common Hybrid Deployment Patterns</h3>
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>On-Premise Core with Cloud Integrations</h4>
+                        <p><strong>Pattern:</strong> Creditec software runs on client's on-premise infrastructure while integrating with cloud-based services</p>
+                        <p><strong>Examples:</strong></p>
+                        <ul style="padding-left: 1.2rem; margin-top: 0.5rem;">
+                            <li style="margin-bottom: 0.4rem;">• Cloud-based document storage</li>
+                            <li style="margin-bottom: 0.4rem;">• SaaS credit bureau connections</li>
+                            <li>Cloud-based reporting/analytics platforms</li>
+                        </ul>
+                    </div>
+                    <div class="concept-card">
+                        <h4>Disaster Recovery in Cloud</h4>
+                        <p><strong>Pattern:</strong> Primary system on-premise with cloud-based disaster recovery environment</p>
+                        <p><strong>Creditec Requirements:</strong></p>
+                        <ul style="padding-left: 1.2rem; margin-top: 0.5rem;">
+                            <li style="margin-bottom: 0.4rem;">• Data synchronization mechanisms</li>
+                            <li style="margin-bottom: 0.4rem;">• Network configuration for failover</li>
+                            <li>Documentation for DR activation procedures</li>
+                        </ul>
+                    </div>
+                    <div class="concept-card">
+                        <h4>Cloud-Native Components</h4>
+                        <p><strong>Pattern:</strong> Some Creditec functionality deployed in client's private cloud while core remains on-premise</p>
+                        <p><strong>Implementation Challenges:</strong></p>
+                        <ul style="padding-left: 1.2rem; margin-top: 0.5rem;">
+                            <li style="margin-bottom: 0.4rem;">• Secure network connections between environments</li>
+                            <li style="margin-bottom: 0.4rem;">• Consistent identity management</li>
+                            <li>Performance considerations for cross-environment calls</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <h3>Network Requirements for Hybrid Deployments</h3>
+                <div class="diagram">
+                    <h4 style="color: #4fc3f7; margin-bottom: 1rem;">Critical Network Considerations</h4>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;">
+                        <div>
+                            <h5 style="color: #64b5f6; margin-bottom: 0.8rem;">Security Requirements</h5>
+                            <ul style="padding-left: 1.2rem;">
+                                <li style="margin-bottom: 0.7rem;">• Encrypted connections between environments (IPsec, TLS)</li>
+                                <li style="margin-bottom: 0.7rem;">• Strict access controls for cross-environment communication</li>
+                                <li style="margin-bottom: 0.7rem;">• Consistent security policies across all environments</li>
+                                <li>Compliance boundary definition and monitoring</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5 style="color: #64b5f6; margin-bottom: 0.8rem;">Performance Requirements</h5>
+                            <ul style="padding-left: 1.2rem;">
+                                <li style="margin-bottom: 0.7rem;">• Latency thresholds for cross-environment calls</li>
+                                <li style="margin-bottom: 0.7rem;">• Bandwidth requirements for data synchronization</li>
+                                <li style="margin-bottom: 0.7rem;">• Quality of Service (QoS) configurations</li>
+                                <li>Monitoring for performance degradation</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Creditec's Hybrid Deployment Support Strategy</h3>
+                <div class="concept-card" style="margin-top: 1rem;">
+                    <ul style="padding-left: 1.5rem;">
+                        <li style="margin-bottom: 0.8rem;">• Develop clear network requirements documentation for each hybrid deployment scenario</li>
+                        <li style="margin-bottom: 0.8rem;">• Provide implementation guides for secure connections between on-premise and cloud components</li>
+                        <li style="margin-bottom: 0.8rem;">• Ensure our software can operate effectively in segmented network environments with controlled access points</li>
+                        <li style="margin-bottom: 0.8rem;">• Support various connection technologies including direct cloud connections (ExpressRoute, Direct Connect)</li>
+                        <li style="margin-bottom: 0.8rem;">• Create reference architectures for common hybrid deployment patterns</li>
+                        <li>Develop diagnostic tools specifically for hybrid environment troubleshooting</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 13: Practical Action Items -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">Part 7: Practical Action Items</div>
+                <div class="slide-number">Slide 13 of 15</div>
+            </div>
+            <div class="slide-content">
+                <h2>Immediate Actions for Development and Support Teams</h2>
+                
+                <h3>Development Team Actions</h3>
+                <div class="key-points">
+                    <div class="point-card">
+                        <h4>Code-Level Actions</h4>
+                        <p>• Review all network-related code for secure defaults</p>
+                        <p>• Ensure proper timeout handling for network operations</p>
+                        <p>• Implement robust error handling for network failures</p>
+                        <p>• Verify secure protocol usage (TLS 1.2+)</p>
+                    </div>
+                    <div class="point-card">
+                        <h4>Documentation Actions</h4>
+                        <p>• Update network requirements documentation</p>
+                        <p>• Create detailed integration guides for common scenarios</p>
+                        <p>• Document all network dependencies for your components</p>
+                        <p>• Review and update security hardening guides</p>
+                    </div>
+                </div>
+                
+                <h3>Support Team Actions</h3>
+                <div class="key-points" style="margin-top: 1.5rem;">
+                    <div class="point-card">
+                        <h4>Troubleshooting Actions</h4>
+                        <p>• Master basic network diagnostic commands</p>
+                        <p>• Create standardized network issue documentation</p>
+                        <p>• Develop client questionnaires for network issues</p>
+                        <p>• Build knowledge base articles for common network issues</p>
+                    </div>
+                    <div class="point-card">
+                        <h4>Client Engagement Actions</h4>
+                        <p>• Include network assessment in implementation planning</p>
+                        <p>• Verify client network meets requirements pre-deployment</p>
+                        <p>• Provide network optimization recommendations</p>
+                        <p>• Educate clients on network monitoring for our software</p>
+                    </div>
+                </div>
+                
+                <h3>Implementation Roadmap</h3>
+                <div class="diagram">
+                    <table style="width: 100%; border-collapse: collapse; color: #e0e0e0;">
+                        <thead>
+                            <tr style="background: #2d2d2d;">
+                                <th style="padding: 0.8rem; text-align: left; border-bottom: 1px solid #444; width: 20%;">Timeline</th>
+                                <th style="padding: 0.8rem; text-align: left; border-bottom: 1px solid #444; width: 80%;">Key Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid #333;">
+                                <td style="padding: 0.8rem; vertical-align: top; font-weight: bold;">Within 1 Week</td>
+                                <td style="padding: 0.8rem;">
+                                    • Complete networking fundamentals assessment<br>
+                                    • Review current project network requirements<br>
+                                    • Document all network dependencies for your components
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #333;">
+                                <td style="padding: 0.8rem; vertical-align: top; font-weight: bold;">Within 2 Weeks</td>
+                                <td style="padding: 0.8rem;">
+                                    • Update relevant documentation with network considerations<br>
+                                    • Identify and address any insecure network defaults<br>
+                                    • Create basic network troubleshooting guides for support
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #333;">
+                                <td style="padding: 0.8rem; vertical-align: top; font-weight: bold;">Within 1 Month</td>
+                                <td style="padding: 0.8rem;">
+                                    • Implement network assessment in implementation process<br>
+                                    • Develop standardized network documentation templates<br>
+                                    • Create hybrid deployment reference architectures
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.8rem; vertical-align: top; font-weight: bold;">Ongoing</td>
+                                <td style="padding: 0.8rem;">
+                                    • Participate in advanced networking training sessions<br>
+                                    • Contribute to network knowledge base articles<br>
+                                    • Review and update network documentation quarterly
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="highlight" style="margin-top: 1.5rem;">
+                    <p><strong>Starting Today:</strong> Every team member should be able to explain the network requirements for their component of the Creditec software, including required ports, protocols, and security considerations. This knowledge is essential for effective client communication and issue resolution.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 14: Ongoing Learning -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">Part 7: Ongoing Learning</div>
+                <div class="slide-number">Slide 14 of 15</div>
+            </div>
+            <div class="slide-content">
+                <h2>Continuous Learning and Development Path</h2>
+                
+                <div class="highlight">
+                    <p><strong>Networking Evolution:</strong> Network technologies and threats are constantly evolving. Maintaining expertise requires ongoing education and practical application of new knowledge.</p>
+                </div>
+                
+                <h3>Learning Pathways for Creditec Staff</h3>
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>Foundational Knowledge</h4>
+                        <p><strong>Target:</strong> All staff</p>
+                        <p><strong>Topics:</strong></p>
+                        <ul style="padding-left: 1.2rem; margin-top: 0.5rem;">
+                            <li style="margin-bottom: 0.4rem;">• OSI/TCP-IP models</li>
+                            <li style="margin-bottom: 0.4rem;">• Basic network protocols and ports</li>
+                            <li style="margin-bottom: 0.4rem;">• Network security fundamentals</li>
+                            <li>Financial industry networking requirements</li>
+                        </ul>
+                        <p style="margin-top: 1rem;"><strong>Resources:</strong> Internal training, Creditec network documentation</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>Intermediate Skills</h4>
+                        <p><strong>Target:</strong> Development & Support teams</p>
+                        <p><strong>Topics:</strong></p>
+                        <ul style="padding-left: 1.2rem; margin-top: 0.5rem;">
+                            <li style="margin-bottom: 0.4rem;">• Network troubleshooting methodologies</li>
+                            <li style="margin-bottom: 0.4rem;">• Secure network configuration practices</li>
+                            <li style="margin-bottom: 0.4rem;">• Integration networking requirements</li>
+                            <li>Hybrid cloud networking patterns</li>
+                        </ul>
+                        <p style="margin-top: 1rem;"><strong>Resources:</strong> Vendor certifications, advanced workshops</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>Advanced Expertise</h4>
+                        <p><strong>Target:</strong> Infrastructure specialists</p>
+                        <p><strong>Topics:</strong></p>
+                        <ul style="padding-left: 1.2rem; margin-top: 0.5rem;">
+                            <li style="margin-bottom: 0.4rem;">• Financial network security architectures</li>
+                            <li style="margin-bottom: 0.4rem;">• High-availability network design</li>
+                            <li style="margin-bottom: 0.4rem;">• Advanced network monitoring techniques</li>
+                            <li>Cloud networking integration patterns</li>
+                        </ul>
+                        <p style="margin-top: 1rem;"><strong>Resources:</strong> Industry certifications, conferences</p>
+                    </div>
+                </div>
+                
+                <h3>Recommended Learning Resources</h3>
+                <div class="diagram">
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;">
+                        <div>
+                            <h4 style="color: #4fc3f7; margin-bottom: 1rem;">Internal Resources</h4>
+                            <ul style="padding-left: 1.2rem;">
+                                <li style="margin-bottom: 0.7rem;">• Creditec Network Configuration Repository</li>
+                                <li style="margin-bottom: 0.7rem;">• Client Deployment Case Studies</li>
+                                <li style="margin-bottom: 0.7rem;">• Network Troubleshooting Knowledge Base</li>
+                                <li>Creditec Reference Architecture Library</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 style="color: #4fc3f7; margin-bottom: 1rem;">External Resources</h4>
+                            <ul style="padding-left: 1.2rem;">
+                                <li style="margin-bottom: 0.7rem;">• SANS Institute Networking Courses</li>
+                                <li style="margin-bottom: 0.7rem;">• CompTIA Network+ Curriculum</li>
+                                <li style="margin-bottom: 0.7rem;">• Cloud Provider Networking Documentation</li>
+                                <li>Financial Services Information Sharing & Analysis Center (FS-ISAC)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Learning Integration into Workflow</h3>
+                <div class="concept-card" style="margin-top: 1rem;">
+                    <p>To ensure continuous learning becomes part of our culture:</p>
+                    <ul style="padding-left: 1.5rem; margin-top: 0.8rem;">
+                        <li style="margin-bottom: 0.7rem;">• Dedicate 2 hours monthly for network-related learning</li>
+                        <li style="margin-bottom: 0.7rem;">• Include network considerations in sprint planning and retrospectives</li>
+                        <li style="margin-bottom: 0.7rem;">• Create a "Network Tip of the Week" sharing program</li>
+                        <li style="margin-bottom: 0.7rem;">• Establish a network knowledge community within Creditec</li>
+                        <li>Implement quarterly network competency assessments</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 15: Key Takeaways -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">Key Takeaways</div>
+                <div class="slide-number">Slide 15 of 15</div>
+            </div>
+            <div class="slide-content">
+                <h2>Essential Principles for Creditec Success</h2>
+                
+                <div class="key-takeaways">
+                    <div class="takeaway-card">
+                        <h3>Networking is Core to Our Business Model</h3>
+                        <p>Networking knowledge is essential for everyone at Creditec, not just infrastructure specialists. Our self-hosted model creates unique networking responsibilities that impact software design, deployment, and support.</p>
+                    </div>
+                    <div class="takeaway-card">
+                        <h3>Financial Networks Have Stringent Requirements</h3>
+                        <p>Our clients' networks must meet strict requirements for security, performance, and reliability that directly affect how our software must be designed and deployed to function properly.</p>
+                    </div>
+                    <div class="takeaway-card">
+                        <h3>Cloud Understanding is Increasingly Important</h3>
+                        <p>As clients adopt hybrid infrastructure approaches, understanding cloud networking models is critical for supporting modern deployment scenarios while maintaining our self-hosted focus.</p>
+                    </div>
+                    <div class="takeaway-card">
+                        <h3>Security is Non-Negotiable</h3>
+                        <p>Network security is foundational in the financial sector—our software must support and enhance clients' security postures, not create vulnerabilities.</p>
+                    </div>
+                    <div class="takeaway-card">
+                        <h3>Continuous Learning is Critical</h3>
+                        <p>Networking technologies and threats evolve rapidly. Ongoing education and practical application of knowledge is essential for maintaining our competitive edge.</p>
+                    </div>
+                    <div class="takeaway-card">
+                        <h3>Client Success Depends on Network Integration</h3>
+                        <p>When our software integrates seamlessly with clients' network environments, we deliver superior value, reduce support issues, and strengthen client relationships.</p>
+                    </div>
+                </div>
+                
+                <div class="highlight" style="margin-top: 2rem; text-align: center; padding: 1.5rem;">
+                    <p style="font-size: 1.4rem; line-height: 1.8; font-weight: 500;">Remember: When you understand networking fundamentals, you're better equipped to develop, deploy, and support software that meets our clients' demanding requirements. In the financial industry, trust is everything, and robust, secure networking is foundational to that trust.</p>
+                </div>
+                
+                <div style="text-align: center; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #444;">
+                    <h3 style="color: #4fc3f7; margin-bottom: 1rem;">Questions & Discussion</h3>
+                    <p style="font-size: 1.2rem;">Are there specific concerns about current network practices, questions about client deployments, or areas where you'd like additional training or resources?</p>
+                    <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap;">
+                        <div style="background: #2d2d2d; padding: 0.8rem 1.5rem; border-radius: 20px;">Network Configuration Challenges</div>
+                        <div style="background: #2d2d2d; padding: 0.8rem 1.5rem; border-radius: 20px;">Hybrid Deployment Support</div>
+                        <div style="background: #2d2d2d; padding: 0.8rem 1.5rem; border-radius: 20px;">Security Best Practices</div>
+                        <div style="background: #2d2d2d; padding: 0.8rem 1.5rem; border-radius: 20px;">Troubleshooting Techniques</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Navigation Controls -->
+        <div class="navigation">
+            <button class="nav-btn" id="prev-btn">&larr;</button>
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <button class="nav-btn" id="next-btn">&rarr;</button>
+        </div>
+        
+        <div class="instructions">
+            Use arrow keys or space bar to navigate | Esc to reset
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slide');
+            const totalSlides = slides.length;
+            let currentSlide = 0;
+            const progressBar = document.getElementById('progress-bar');
+            
+            // Initialize the presentation
+            function initPresentation() {
+                // Set the first slide as active
+                slides[0].classList.add('active');
+                updateProgress();
+            }
+            
+            // Go to specific slide
+            function goToSlide(n) {
+                if (n < 0 || n >= totalSlides) return;
+                
+                // Update classes for transition
+                slides[currentSlide].classList.remove('active');
+                slides[currentSlide].classList.add('prev');
+                
+                slides[n].classList.remove('prev');
+                slides[n].classList.add('active');
+                
+                currentSlide = n;
+                updateProgress();
+            }
+            
+            // Update progress bar
+            function updateProgress() {
+                const progress = (currentSlide / (totalSlides - 1)) * 100;
+                progressBar.style.width = `${progress}%`;
+            }
+            
+            // Next slide
+            function nextSlide() {
+                if (currentSlide < totalSlides - 1) {
+                    goToSlide(currentSlide + 1);
+                }
+            }
+            
+            // Previous slide
+            function prevSlide() {
+                if (currentSlide > 0) {
+                    goToSlide(currentSlide - 1);
+                }
+            }
+            
+            // Reset to first slide
+            function resetPresentation() {
+                // Remove all transition classes
+                slides.forEach(slide => {
+                    slide.classList.remove('active');
+                    slide.classList.remove('prev');
+                });
+                
+                // Reset to first slide
+                slides[0].classList.add('active');
+                currentSlide = 0;
+                updateProgress();
+            }
+            
+            // Event listeners
+            document.getElementById('next-btn').addEventListener('click', nextSlide);
+            document.getElementById('prev-btn').addEventListener('click', prevSlide);
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                switch(e.key) {
+                    case 'ArrowRight':
+                    case ' ':
+                        e.preventDefault();
+                        nextSlide();
+                        break;
+                    case 'ArrowLeft':
+                        e.preventDefault();
+                        prevSlide();
+                        break;
+                    case 'Escape':
+                        resetPresentation();
+                        break;
+                }
+            });
+            
+            // Initialize
+            initPresentation();
+        });
+    </script>
+</body>
+</html>
