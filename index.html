@@ -1480,95 +1480,117 @@
             Use arrow keys or space bar to navigate | Esc to reset
         </div>
     </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        let currentSlide = 0;
+        const progressBar = document.getElementById('progress-bar');
+        const presentation = document.querySelector('.presentation');
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const slides = document.querySelectorAll('.slide');
-            const totalSlides = slides.length;
-            let currentSlide = 0;
-            const progressBar = document.getElementById('progress-bar');
-            
-            // Initialize the presentation
-            function initPresentation() {
-                // Set the first slide as active
-                slides[0].classList.add('active');
-                updateProgress();
+        // Initialize the presentation
+        function initPresentation() {
+            slides[0].classList.add('active');
+            updateProgress();
+        }
+
+        function goToSlide(n) {
+            if (n < 0 || n >= totalSlides) return;
+            slides[currentSlide].classList.remove('active');
+            slides[currentSlide].classList.add('prev');
+            slides[n].classList.remove('prev');
+            slides[n].classList.add('active');
+            currentSlide = n;
+            updateProgress();
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                goToSlide(currentSlide + 1);
             }
-            
-            // Go to specific slide
-            function goToSlide(n) {
-                if (n < 0 || n >= totalSlides) return;
-                
-                // Update classes for transition
-                slides[currentSlide].classList.remove('active');
-                slides[currentSlide].classList.add('prev');
-                
-                slides[n].classList.remove('prev');
-                slides[n].classList.add('active');
-                
-                currentSlide = n;
-                updateProgress();
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                goToSlide(currentSlide - 1);
             }
-            
-            // Update progress bar
-            function updateProgress() {
-                const progress = (currentSlide / (totalSlides - 1)) * 100;
-                progressBar.style.width = `${progress}%`;
-            }
-            
-            // Next slide
-            function nextSlide() {
-                if (currentSlide < totalSlides - 1) {
-                    goToSlide(currentSlide + 1);
-                }
-            }
-            
-            // Previous slide
-            function prevSlide() {
-                if (currentSlide > 0) {
-                    goToSlide(currentSlide - 1);
-                }
-            }
-            
-            // Reset to first slide
-            function resetPresentation() {
-                // Remove all transition classes
-                slides.forEach(slide => {
-                    slide.classList.remove('active');
-                    slide.classList.remove('prev');
-                });
-                
-                // Reset to first slide
-                slides[0].classList.add('active');
-                currentSlide = 0;
-                updateProgress();
-            }
-            
-            // Event listeners
-            document.getElementById('next-btn').addEventListener('click', nextSlide);
-            document.getElementById('prev-btn').addEventListener('click', prevSlide);
-            
-            // Keyboard navigation
-            document.addEventListener('keydown', function(e) {
-                switch(e.key) {
-                    case 'ArrowRight':
-                    case ' ':
-                        e.preventDefault();
-                        nextSlide();
-                        break;
-                    case 'ArrowLeft':
-                        e.preventDefault();
-                        prevSlide();
-                        break;
-                    case 'Escape':
-                        resetPresentation();
-                        break;
-                }
+        }
+
+        function resetPresentation() {
+            slides.forEach(slide => {
+                slide.classList.remove('active', 'prev');
             });
-            
-            // Initialize
-            initPresentation();
+            slides[0].classList.add('active');
+            currentSlide = 0;
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const progress = (currentSlide / (totalSlides - 1)) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        // === NEW: Touch swipe support ===
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        presentation.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
         });
-    </script>
+
+        presentation.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 50; // pixels
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) < swipeThreshold) return;
+            if (diff > 0) {
+                nextSlide();
+            } else {
+                prevSlide();
+            }
+        }
+
+        // === NEW: Click on left/right screen halves ===
+        presentation.addEventListener('click', e => {
+            const rect = presentation.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const width = rect.width;
+
+            if (clickX < width * 0.3) {
+                prevSlide();
+            } else if (clickX > width * 0.7) {
+                nextSlide();
+            }
+            // Middle 40% does nothing on click
+        });
+
+        // Existing button and keyboard controls
+        document.getElementById('next-btn').addEventListener('click', nextSlide);
+        document.getElementById('prev-btn').addEventListener('click', prevSlide);
+
+        document.addEventListener('keydown', function(e) {
+            switch(e.key) {
+                case 'ArrowRight':
+                case ' ':
+                    e.preventDefault();
+                    nextSlide();
+                    break;
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    prevSlide();
+                    break;
+                case 'Escape':
+                    resetPresentation();
+                    break;
+            }
+        });
+
+        initPresentation();
+    });
+</script>
 </body>
 </html>
