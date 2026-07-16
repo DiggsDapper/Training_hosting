@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GENFIN 3D - Loan Management System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0e1a;
+            color: #fff;
+            overflow: hidden;
+        }
+        
+        #canvas {
+            display: block;
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        #overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        /* Header */
+        .header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(180deg, rgba(10, 14, 26, 0.95) 0%, rgba(10, 14, 26, 0.7) 100%);
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+            z-index: 100;
+            pointer-events: all;
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 12px;
+        }
+        
+        .nav {
+            display: flex;
+            gap: 20px;
+            font-size: 11px;
+        }
+        
+        .nav-item {
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 3px;
+            transition: 0.2s;
+            color: #aaa;
+        }
+        
+        .nav-item:hover {
+            background: rgba(102, 126, 234, 0.1);
+            color: #fff;
+        }
+        
+        .nav-item.active {
+            background: #667eea;
+            color: #fff;
+        }
+        
+        .time-display {
+            font-size: 11px;
+            color: #aaa;
+        }
+        
+        .header-bottom {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .tab {
+            padding: 6px 12px;
+            background: rgba(102, 126, 234, 0.1);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 10px;
+            font-weight: 600;
+            transition: 0.2s;
+            color: #aaa;
+        }
+        
+        .tab:hover {
+            background: rgba(102, 126, 234, 0.2);
+        }
+        
+        .tab.active {
+            background: #667eea;
+            color: #fff;
+            border-color: #667eea;
+        }
+        
+        .tab.escalation {
+            background: #ff4757;
+            border-color: #ff4757;
+            color: #fff;
+        }
+        
+        /* Main Content Area */
+        .main-content {
+            position: absolute;
+            top: 75px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: all;
+            overflow: hidden;
+        }
+        
+        /* Left Sidebar */
+        .left-panel {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 70px;
+            background: rgba(10, 14, 26, 0.8);
+            border-right: 1px solid rgba(102, 126, 234, 0.2);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 10px;
+            z-index: 90;
+        }
+        
+        .sidebar-btn {
+            width: 50px;
+            height: 40px;
+            background: rgba(102, 126, 234, 0.15);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: 0.2s;
+            color: #aaa;
+        }
+        
+        .sidebar-btn:hover {
+            background: rgba(102, 126, 234, 0.3);
+            color: #667eea;
+        }
+        
+        .sidebar-btn.active {
+            background: #667eea;
+            color: #fff;
+        }
+        
+        /* Right Panel */
+        .right-panel {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            width: 280px;
+            background: rgba(20, 30, 48, 0.9);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            border-radius: 6px;
+            padding: 15px;
+            z-index: 90;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .panel-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+        }
+        
+        .stat-label {
+            color: #aaa;
+        }
+        
+        .stat-value {
+            color: #667eea;
+            font-weight: 600;
+        }
+        
+        /* Bottom Controls */
+        .bottom-controls {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            display: flex;
+            gap: 10px;
+            z-index: 90;
+        }
+        
+        .control-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(102, 126, 234, 0.8);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: 0.2s;
+            color: #fff;
+        }
+        
+        .control-btn:hover {
+            background: #667eea;
+            transform: scale(1.1);
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(102, 126, 234, 0.05);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(102, 126, 234, 0.3);
+            border-radius: 3px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(102, 126, 234, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    
+    <div id="overlay">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-top">
+                <div class="logo">
+                    <div class="logo-icon">G</div>
+                    <span>GENFIN</span>
+                </div>
+                <div class="nav">
+                    <div class="nav-item active">TASKS</div>
+                    <div class="nav-item">WORKFLOW</div>
+                    <div class="nav-item">PAGE TASKS</div>
+                    <div class="nav-item">HELP</div>
+                </div>
+                <div class="time-display">58:29</div>
+            </div>
+            <div class="header-bottom">
+                <div class="tab active">QUEUES</div>
+                <div class="tab">EMAILS</div>
+                <div class="tab escalation">ESCALATIONS</div>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Left Sidebar -->
+            <div class="left-panel">
+                <div class="sidebar-btn active">📋</div>
+                <div class="sidebar-btn">✉️</div>
+                <div class="sidebar-btn">⚠️</div>
+            </div>
+            
+            <!-- Right Panel -->
+            <div class="right-panel">
+                <div class="panel-title">Queue Statistics</div>
+                <div class="stat-row">
+                    <span class="stat-label">Current Tasks:</span>
+                    <span class="stat-value">200 Items</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Collection Date:</span>
+                    <span class="stat-value">22 Oct 2025</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Queue Status:</span>
+                    <span class="stat-value">206 Days</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Load Balance:</span>
+                    <span class="stat-value">84%</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Priority Level:</span>
+                    <span class="stat-value">High</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Next Refresh:</span>
+                    <span class="stat-value">28 seconds</span>
+                </div>
+            </div>
+            
+            <!-- Bottom Controls -->
+            <div class="bottom-controls">
+                <button class="control-btn" title="Rotate">🔄</button>
+                <button class="control-btn" title="Zoom Reset">🔍</button>
+                <button class="control-btn" title="Export">📊</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
