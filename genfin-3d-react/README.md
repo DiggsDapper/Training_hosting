@@ -1,139 +1,103 @@
-# GENFIN 3D React - Modern 3D Loan Management System
+# GENFIN 3D React - Workflow Queues Edition
 
 ## 🎯 Overview
 
-A modern React + Framer Motion implementation of the GENFIN loan management system with **faked 3D perspective effects** and smooth animations.
+A modern React + Framer Motion implementation of the GENFIN Workflow Queues system with **interactive 3D perspective effects** matching the original interface design.
 
 ## ✨ Features
 
-- **React 18** with functional components and hooks
-- **Framer Motion** for smooth 3D perspective animations
-- **Perspective Transform** effects for 3D appearance
-- **Interactive Drag to Rotate** - grab and drag to rotate the table
-- **Scroll to Zoom** - scroll wheel to adjust perspective
-- **Hover Effects** - rows scale and highlight on hover
-- **Modern UI** - glass-morphism design with glows
-- **9 Loan Entries** - real data from original GENFIN
-- **Responsive** - works on all modern browsers
+✅ **Exact Layout Match**
+- Header with navigation and tabs
+- Left sidebar with queue controls  
+- Workflow Queues data table with 10 columns
+- Expandable sections (Tasks not attended, escalated, on hold, etc.)
+- Light blue/white color scheme matching original
+
+✅ **3D Perspective Effects**
+- Drag to rotate the table in 3D space
+- Scroll to zoom perspective in/out
+- Smooth spring animations
+- Real perspective transforms (not Three.js)
+
+✅ **Interactive Elements**
+- Row hover effects with subtle color changes
+- Expandable/collapsible sections at bottom
+- Control buttons (Rotate, Reset, Export)
+- Dynamic action icons
+
+✅ **Modern Design**
+- Glass-morphism effects
+- Smooth transitions and animations
+- Professional color palette
+- Responsive to window resize
 
 ## 🚀 Quick Start
 
-### Prerequisites
-- Node.js 14+ installed
-
-### Installation
-
 ```bash
-# Navigate to project folder
 cd genfin-3d-react
-
-# Install dependencies
 npm install
-
-# Start development server
 npm start
 ```
 
-Browser will open at `http://localhost:3000`
+Opens at `http://localhost:3000`
 
 ## 🎮 Interactions
 
-- **Drag Mouse** - Rotate the 3D perspective
+- **Drag Mouse** - Rotate 3D perspective
 - **Scroll Wheel** - Zoom in/out
-- **Rotate Button** - Quick 90° rotation
-- **Reset Button** - Back to default view
-- **Export Button** - Screenshot or data export (demo)
+- **Hover Rows** - Subtle highlight effects
+- **Click Section Headers** - Expand/collapse sections
+- **Control Buttons** - Rotate/Reset/Export
 
-## 📁 Project Structure
+## 📁 Structure
 
 ```
-genfin-3d-react/
-├── public/
-│   └── index.html
-├── src/
-│   ├── components/
-│   │   ├── Header.js & Header.css
-│   │   ├── Sidebar.js & Sidebar.css
-│   │   ├── Table3D.js & Table3D.css
-│   │   ├── RightPanel.js & RightPanel.css
-│   │   └── Controls.js & Controls.css
-│   ├── App.js & App.css
-│   ├── index.js & index.css
-│   └── App.test.js
-├── package.json
-└── README.md
+src/
+├── App.js & App.css
+├── components/
+│   ├── Header.js & Header.css
+│   ├── Sidebar.js & Sidebar.css
+│   ├── WorkflowQueues.js & WorkflowQueues.css
+│   ├── ExpandableSections.js & ExpandableSections.css
+│   └── Controls.js & Controls.css
+├── index.js & index.css
+public/
+└── index.html
 ```
 
-## 🎨 Design
+## 🎨 Colors
 
-- **Color Scheme**: #667eea (primary), #764ba2 (secondary), #0a0e1a (background)
-- **Fonts**: System fonts (Segoe UI, Roboto, etc.)
-- **Effects**: 
-  - CSS 3D transforms
-  - Box shadows and glows
-  - Backdrop blur effects
-  - Smooth spring animations
+- Primary: #4a90e2 (Blue)
+- Secondary: #357abd (Dark Blue)
+- Background: #f0f2f5 (Light Gray)
+- Text: #333 (Dark Gray)
+- Accent: #d32f2f (Red for escalations)
 
-## 🛠️ Built With
+## 🔧 Technologies
 
-- **React 18.2** - UI library
-- **Framer Motion 10** - Animation library
-- **CSS3** - Styling and 3D effects
-- **JavaScript ES6+** - Modern syntax
+- React 18.2
+- Framer Motion 10
+- CSS3 3D Transforms
+- JavaScript ES6+
 
 ## 📊 Data Format
 
-Each task entry contains:
+Each workflow entry:
 ```javascript
 {
-  id: 152,
+  id: 104,
   cf: 'CF',
-  type: 'Loan Collection Lead',
-  task: 'Loan Collection Select',
-  date: '2025-10-22',
-  time1: '10:11',
-  time2: '10:11',
-  days: 206
+  type: 'Complete Application Forms',
+  task: 'Waiting For Statements',
+  date: '2024-99999-24',
+  note: 'Whatsapp Testing 24',
+  user: 'SYSTEM',
+  time1: '2025-07-25 08:44',
+  time2: '2025-07-31 11:32:08',
+  duration: '359 Days 21 Hours 01 Minutes'
 }
 ```
 
-## 🔮 "3D" Implementation
-
-The 3D effect is **faked** using CSS transforms:
-- `perspective()` on wrapper
-- `rotateX()` and `rotateY()` on table
-- Smooth easing animations
-- Shadow and lighting effects
-- No heavy Three.js library needed
-- **Much faster** and **more responsive**
-
-## 🚀 Performance
-
-- 60 FPS animations
-- Optimized re-renders with React hooks
-- Lazy animation delays
-- Smooth spring physics
-
-## 📝 Available Scripts
-
-```bash
-npm start      # Run dev server
-npm build      # Build for production
-npm test       # Run tests
-eject          # Not recommended
-```
-
-## 🌐 Browser Support
-
-- ✅ Chrome 90+
-- ✅ Firefox 88+
-- ✅ Safari 14+
-- ✅ Edge 90+
-
-## 📜 License
-
-MIT
-
 ---
 
-**Created**: July 2026 | **Version**: 1.0 | **Status**: Production Ready ✨
+**Version**: 1.0 | **Status**: Production Ready ✨

@@ -3,40 +3,41 @@
   top: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(180deg, rgba(10, 14, 26, 0.98) 0%, rgba(10, 14, 26, 0.85) 100%);
-  border-bottom: 1px solid rgba(102, 126, 234, 0.3);
-  padding: 12px 20px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
+  border-bottom: 2px solid #d9e1e8;
   z-index: 101;
-  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.header-row {
+.header-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  padding: 12px 20px;
+  border-bottom: 1px solid #e8eaed;
 }
 
-.logo {
+.logo-section {
   display: flex;
   align-items: center;
   gap: 8px;
   font-size: 13px;
   font-weight: bold;
   letter-spacing: 0.5px;
+  color: #1a1a1a;
 }
 
 .logo-icon {
-  width: 20px;
-  height: 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  width: 22px;
+  height: 22px;
+  background: linear-gradient(135deg, #4a5fc7 0%, #667eea 100%);
   border-radius: 3px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 11px;
   font-weight: 900;
-  box-shadow: 0 0 15px rgba(102, 126, 234, 0.4);
+  color: #fff;
 }
 
 .nav-menu {
@@ -48,7 +49,7 @@
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.5px;
-  color: #aaa;
+  color: #666;
   cursor: pointer;
   padding: 4px 8px;
   border-radius: 3px;
@@ -56,57 +57,65 @@
 }
 
 .nav-item:hover {
-  background: rgba(102, 126, 234, 0.1);
-  color: #667eea;
+  background: rgba(74, 95, 199, 0.1);
+  color: #4a5fc7;
 }
 
 .nav-item.active {
-  background: rgba(102, 126, 234, 0.3);
-  color: #667eea;
-  text-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
+  background: rgba(74, 95, 199, 0.15);
+  color: #4a5fc7;
 }
 
 .time-display {
   font-size: 11px;
-  color: #888;
+  color: #999;
   font-weight: 600;
-  text-shadow: 0 0 5px rgba(102, 126, 234, 0.2);
 }
 
-.tab-group {
+.header-tabs {
   display: flex;
   gap: 8px;
+  padding: 8px 20px;
+  background: #f8f9fa;
 }
 
 .tab {
-  padding: 6px 12px;
-  background: rgba(102, 126, 234, 0.08);
-  border: 1px solid rgba(102, 126, 234, 0.25);
+  padding: 6px 14px;
+  background: #e8eaed;
+  border: 1px solid #d9e1e8;
   border-radius: 3px;
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.3px;
   cursor: pointer;
   transition: all 0.2s ease;
-  color: #aaa;
+  color: #666;
 }
 
 .tab:hover {
-  background: rgba(102, 126, 234, 0.15);
-  border-color: rgba(102, 126, 234, 0.4);
-  box-shadow: 0 0 10px rgba(102, 126, 234, 0.2);
+  background: #dfe2e8;
+  border-color: #cad0d8;
 }
 
 .tab.active {
-  background: #667eea;
-  border-color: #667eea;
+  background: #4a90e2;
+  border-color: #4a90e2;
   color: #fff;
-  box-shadow: 0 0 15px rgba(102, 126, 234, 0.5);
 }
 
 .tab.escalation {
-  background: #ff4757;
-  border-color: #ff4757;
+  background: #d32f2f;
+  border-color: #d32f2f;
   color: #fff;
-  box-shadow: 0 0 15px rgba(255, 71, 87, 0.4);
+}
+
+.workflow-header {
+  text-align: center;
+  padding: 8px 20px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #333;
+  background: #ffffff;
+  border-bottom: 1px solid #e8eaed;
 }
